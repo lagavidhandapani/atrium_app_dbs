@@ -1,18 +1,14 @@
 # Week 2 security requirements
 
-Your name:
-Date:
+Your name: Lagavi Dhandapani
+Date: 04 October 2026
 
-Fill this in as you work, rather than at the end. Where you are unsure, write
-that you are unsure and say why. A sentence you can support is worth more than a
-confident one you cannot.
 
 ---
 
 ## 1. What this application is
 
-Three or four sentences, in your own words, describing what Atrium does and who
-uses it.
+Atrium is a small internal staff workspace which can be used by staff
 
 **Where the assistant's explanation did not match the application.** Anything you
 checked and found different, however small. Write "nothing found" if that is the
