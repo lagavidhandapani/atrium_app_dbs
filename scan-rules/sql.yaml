@@ -26,4 +26,4 @@ rules:
           - pattern: $X = "$A" + ... + "$B"
       - metavariable-regex:
           metavariable: $A
-          regex: (?i).*(select|update|delete|where|from)\s
+          regex: (?i).*(select|insert|update|delete|where|from)\s
