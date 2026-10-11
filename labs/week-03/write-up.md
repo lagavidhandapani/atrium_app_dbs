@@ -58,8 +58,8 @@ Record both. A single result on its own proves nothing.
 **The case I was testing for**
 
 - What I entered: I signed in and searched for ' OR 1=1 --
-- What came back: I have not checked what the running application returns yet. From reading the code, I think the input will make the SQL condition always true, so the search may return all colleagues
-- How this differs from the ordinary case: The ordinary search should show only Bob. The test input may show everyone. Do not write this expected result as something I saw until I try it in the running application
+- What came back: All 3 colleagues appeared: Alice Nolan, Bob Keane and Morgan Doyle.
+- How this differs from the ordinary case: Searching Keane returned only Bob, and Alice did not appear. This input returned everyone, including Morgan Doyle, an admin.
 
 ## 5. My answer
 
@@ -69,18 +69,25 @@ Delete the two that do not apply.
 
 **Why, in two or three sentences.** Write for somebody who has not seen any of this.
 
+The directory search puts the q value straight into an SQL query. When I searched ' OR 1=1 -- , the search returned all 3 colleagues instead of none or one. This shows that my input changed the query.
+
 **What would change my mind.** If new information would alter this answer, say what.
+
+A control search using text that matches no real record should return zero results. If it instead returns all colleagues, the earlier result is not caused by the SQL injection payload, and the finding would need to be reconsidered.
 
 **How far this answer reaches.** What you established applies to a particular page,
 a particular set of data and this version of the application. Say what you have
 shown, and be careful not to claim more.
 
+I showed this for the /directory search, as a signed-in user, with this 3-person data, in this version of Atrium. I did not show that I can read other tables or change data.
+
 ## 6. Back to the assistant
 
 The thing you noted in section 2, that you had not verified at the time.
 
-- Did I check it?
-- Was it right?
+- Did I check it?  Yes. I ran the test in the running application.
+
+- Was it right? Partly. The code suggested the input could change the query, and the application returned all 3 colleagues. That matches, but it only shows the result of this one input.
 
 ---
 
@@ -88,3 +95,5 @@ The thing you noted in section 2, that you had not verified at the time.
 
 The other two findings matched the same rule. Why are they not the same situation?
 Two sentences.
+
+The reset-code query builds its SQL from fixed text and passes the actual values in separately through `?` placeholders — the user's input never gets joined into the query itself. The resource query works the same way: it uses fixed SQL with a `?` placeholder for the resource ID. The directory search is different — it puts the search text straight into the SQL command, which is why that one is risky and these two are not.
