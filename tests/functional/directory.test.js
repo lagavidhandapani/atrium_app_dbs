@@ -38,6 +38,15 @@ test("a search that matches nobody says so, rather than failing", async () => {
   assert.match(res.text, /no (one|results|colleagues)|nobody|nothing/i);
 });
 
+test("directory searches treat quote characters as ordinary text", async () => {
+  const { app } = freshApp();
+  const agent = await signIn(app, ALICE.username, ALICE.password);
+
+  const res = await agent.get("/directory").query({ q: "Alice Nolan'" });
+  assert.equal(res.status, 200);
+  assert.match(res.text, /Alice Nolan/);
+});
+
 test("the directory is not readable until you sign in", async () => {
   const { app } = freshApp();
 

@@ -101,4 +101,4 @@ What does `src/config/session.js` show about the session that the Z5 response ca
 
 `src/config/session.js` shows the configured session-cookie policy: `httpOnly: false`, `sameSite: false`, and `secure: false`. This tells us what the application is set up to request — not necessarily what a specific response actually sent.
 
-The Z5 `POST /login` response confirms this at runtime: in that observed login, the `connect.sid` cookie was set without the `HttpOnly` flag. Source inspection alone cannot confirm which cookie attributes are actually emitted — only the running application can show that.
+The Z5 `POST /login` response confirms this at runtime: in that observed login, the `connect.sid` cookie was set without the `HttpOnly` flag. Source inspection alone cannot confirm which cookie attributes are actually emitted only the running application can show that.

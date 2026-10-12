@@ -96,4 +96,4 @@ The thing you noted in section 2, that you had not verified at the time.
 The other two findings matched the same rule. Why are they not the same situation?
 Two sentences.
 
-The reset-code query builds its SQL from fixed text and passes the actual values in separately through `?` placeholders — the user's input never gets joined into the query itself. The resource query works the same way: it uses fixed SQL with a `?` placeholder for the resource ID. The directory search is different — it puts the search text straight into the SQL command, which is why that one is risky and these two are not.
+The reset-code query builds its SQL from fixed text and passes the actual values in separately through `?` placeholders — the user's input never gets joined into the query itself. The resource query works the same way: it uses fixed SQL with a `?` placeholder for the resource ID. The directory search is different it puts the search text straight into the SQL command, which is why that one is risky and these two are not.

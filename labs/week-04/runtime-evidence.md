@@ -76,4 +76,3 @@ list? What does that tell you about this scan's coverage?
 
 I opened `/dashboard` after signing in, but the signed-out spider did not reach it. This shows that the spider's coverage was limited to pages it could discover without an authenticated session — it did not cover every page available to a signed-in user.
 
-(Check your spider's actual route list before using this. If `/dashboard` does appear there, name a different signed-in page you opened manually that the spider missed — or say honestly that you didn't find one.)
