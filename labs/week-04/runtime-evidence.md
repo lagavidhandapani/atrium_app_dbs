@@ -37,29 +37,35 @@ a full session cookie value.
 
 **Ordinary search**
 
-- Account, method and full URL:
-- Status and any redirect:
-- Relevant response text or visible result:
+- Account, method and full URL: Alice; GET http://localhost:9090/directory?q=Alice
+- Status and any redirect: 200 OK; no redirect
+- Relevant response text or visible result: Directory page showed Alice’s result.
 
 **Alert request repeated by me**
 
-- Account, method and full URL:
-- Status and any redirect:
-- Relevant response text or visible result:
-- Did the alert's observation repeat? If not, what happened?
+- Account, method and full URL: GET http://atrium.localhost:9090/directory?q=Alice+Nolan%27
+- Status and any redirect: 500 Internal Server Error; no redirect
+- Relevant response text or visible result: near "Nolan": syntax error / SQLiteError: near "Nolan": syntax error
+- Did the alert's observation repeat? If not, what happened?  Yes. Resending the altered search produced the SQLite syntax error again.
 
 ## 5. Conclusion
 
 **What this evidence proves.** Limit the answer to this route, account and
 response.
 
+While signed in as Alice, a normal directory search returned 200 OK. The altered search reproduced what ZAP flagged: it returned a 500 Internal Server Error, along with a SQLite syntax error.
+
 **What this evidence does not prove.** Name an impact or wider claim that would
 need another test.
+
+This does not show that any data was actually read, changed, or stolen, nor that other routes or accounts are also affected. Confirming those would require separate tests.
 
 ## 6. Short finding
 
 Write a short paragraph that gives the observation, location, possible impact,
 evidence and a high-level repair. Keep untested impact conditional.
+
+The signed-in directory search in `src/handlers/directory.js` concatenates the `q` input directly into the SQL query. Alice's ordinary search returned `200 OK`, but a search containing a quote character reproduced a `500` response with a SQLite syntax error — showing that specially crafted input can disrupt or alter the query. This test did not demonstrate that data was actually read or changed. The fix is to use a parameterized query and bind the search text as a value, rather than concatenating it into the SQL string.
 
 ---
 
@@ -67,3 +73,7 @@ evidence and a high-level repair. Keep untested impact conditional.
 
 Which signed-in page did you open that was absent from your spider's route
 list? What does that tell you about this scan's coverage?
+
+I opened `/dashboard` after signing in, but the signed-out spider did not reach it. This shows that the spider's coverage was limited to pages it could discover without an authenticated session — it did not cover every page available to a signed-in user.
+
+(Check your spider's actual route list before using this. If `/dashboard` does appear there, name a different signed-in page you opened manually that the spider missed — or say honestly that you didn't find one.)
