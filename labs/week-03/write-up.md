@@ -79,8 +79,6 @@ A control search using text that matches no real record should return zero resul
 a particular set of data and this version of the application. Say what you have
 shown, and be careful not to claim more.
 
-I showed this for the /directory search, as a signed-in user, with this 3-person data, in this version of Atrium. I did not show that I can read other tables or change data.
-
 ## 6. Back to the assistant
 
 The thing you noted in section 2, that you had not verified at the time.
